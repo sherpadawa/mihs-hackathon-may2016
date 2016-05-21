@@ -11,11 +11,12 @@ $( document ).ready( function() {
          }    
         
     });
+    
+     $(window).on( 'NextSeason', function(){
+        console.log( 'move to next' );
+    });
    
-    
-    
-    
-    var seasons=["winter","spring","beach"];
+    var seasons=["beach","winter","western","fancy"];
     
     var clothes = [
     
@@ -72,6 +73,7 @@ $( document ).ready( function() {
     // The score
     
     var scoreValue = 0;
+    var scoremax = 5;
     
     function scoredisplay(){
         $('#score span').text( scoreValue );
@@ -87,14 +89,21 @@ $( document ).ready( function() {
         scoredisplay();
     }
     
-    function score(clothingItem) {
-        var currentseason= seasons[0];
-        if(currentseason===clothingItem.season){
+    function score(caughtseason) {
+        var currentseason = seasons[0];
+        if(currentseason===caughtseason){
             scoreup(); 
         }
         else{
             scoredown();
         }
+        
+        if(scoreValue===scoremax){
+            
+            $( window ).trigger( 'NextSeason' );
+            
+        }
+        
     }
     
     
@@ -116,7 +125,13 @@ $( document ).ready( function() {
             var left= i*100+"px";
             var random = randomclothes();
             var classname= random.season+"-"+random.name;
-            $('<div/>').addClass("clothes").addClass(classname).css({left:left}).appendTo(clothescontainer);
+            
+            $('<div/>')
+                .addClass("clothes")
+                .addClass(classname)
+                .attr( 'data-season', random.season )
+                .css({left:left})
+                .appendTo(clothescontainer);
     
         }
         
@@ -124,8 +139,7 @@ $( document ).ready( function() {
     
     function moveclothes() {
         
-        
-        var clothes = $(".clothes");
+        var clothes = $('.clothes')
         for(var i = 0; i <  clothes.length; i++){
            var item = $(clothes[i])
            var top= item.position().top;
@@ -133,17 +147,17 @@ $( document ).ready( function() {
           item.css("top", newposition);
           
           // collision dectection
-          console.log(item)
           var rect1 = $("#person")[0].getBoundingClientRect();
-          var rect2 = $(item).getBoundingClientRect();
+          var rect2 = $(item)[0].getBoundingClientRect();
 
-if (rect1.left< rect2.left + rect2.width &&
-   rect1.left + rect1.width > rect2.left &&
-   rect1.top < rect2.top + rect2.height &&
-   rect1.height + rect1.top > rect2.top) {
-    // collision detected!
-    console.log("we collided");
-}
+            if (rect1.left< rect2.left + rect2.width &&
+               rect1.left + rect1.width > rect2.left &&
+               rect1.top < rect2.top + rect2.height &&
+               rect1.height + rect1.top > rect2.top) {
+                // collision detected!
+               item.remove();
+                
+            }
           
         }
         

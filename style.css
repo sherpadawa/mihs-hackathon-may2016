@@ -29,7 +29,11 @@
 #buttons{
     position:absolute;
     z-index: 100;
-    
+    background-color:lightgray;
+    top:200px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:50px;
 }
 
 #score {
@@ -70,7 +74,7 @@
 }
 
 #person {
-    width:100px;
+    width:75px;
    height:100px; 
     background-color:red;
     position:absolute;
