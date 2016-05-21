@@ -22,6 +22,8 @@ $( document ).ready( function() {
     // Index of current season
     var seasonindex = 0;
     
+    var addClothesInterval = null;
+    
     // 
     var clothes = [
     
@@ -77,7 +79,9 @@ $( document ).ready( function() {
           screensize();  
         } 
        
-       setInterval(moveclothes,200);
+       clearInterval( addClothesInterval );
+       
+       addClothesInterval = setInterval(moveclothes,200);
        
     }
     
@@ -138,10 +142,14 @@ $( document ).ready( function() {
     });
     
     $(window).on( 'YouWin', function(){
+        clearInterval( addClothesInterval );
+        $('.clothes').remove();
         $('#winner').removeClass('hide');
     } );
     
      $(window).on( 'YouLose', function(){
+        clearInterval( addClothesInterval );
+         $('.clothes').remove();
         $('#loser').removeClass('hide');
     } );
     
@@ -178,7 +186,7 @@ $( document ).ready( function() {
     
     function moveclothes() {
         
-        var clothes = $('.clothes')
+        var clothes = $('.clothes');
         for(var i = 0; i <  clothes.length; i++){
            var item = $(clothes[i])
            var top= item.position().top;
