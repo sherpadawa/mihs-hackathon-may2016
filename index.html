@@ -17,15 +17,25 @@
           <!-- HEre will be the basic game -->
             <div id="background" class="back">
                 <div id="score">Score:<span>0</span> Points</div>
-                <div id="person" class="boy characters" ></div>
+                <div id="person" class="characters" ></div>
                 <div id="closet"></div>
             </div>
-            <div id="buttons">
-               <center class="center-buttons"> 
-                   <button id="gamestart" type="button" class="btn btn-success">Start</button>
-                   <button id="gamestop" type="button" class="btn btn-danger">Stop</button>
-               </center>
+            <div id="buttons" class="popup">
+            
+                <h2>Catch The Clothes</h2>
+                <h4>Select your character</h4>
+                <div class="center-block" style="width:220px;">
+                    <div data-character="boy" class="characters boy"></div>
+                    <div data-character="girl" class="characters girl"></div>
+                </div>
+                
+                <p>Press the left and right buttons to move your characters. Touch the correct clothing to earn points.</p>
+               
+            </div>
+            <div id="winner" class="popup hide">
+                <h1>YOU WON!!</h1>
             </div>
        </div> 
+      
     </body>
 </html>

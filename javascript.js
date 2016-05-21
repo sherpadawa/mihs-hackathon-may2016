@@ -1,5 +1,6 @@
 $( document ).ready( function() {
     
+    //Touch the left and the right keys [ moves the character]
     
     $(window).keydown(function(event){
          if(event.keyCode==37) {
@@ -12,12 +13,16 @@ $( document ).ready( function() {
         
     });
     
-     $(window).on( 'NextSeason', function(){
-        console.log( 'move to next' );
-    });
-   
+    // List us the seasons
     var seasons=["beach","winter","western","fancy"];
     
+    // Season from list
+    var currentseason = seasons[0];
+    
+    // Index of current season
+    var seasonindex = 0;
+    
+    // 
     var clothes = [
     
         { 'season' : 'beach', 'name' : 'sandals' }, 
@@ -52,28 +57,35 @@ $( document ).ready( function() {
     
     // Starts the game and change the background
     
-    $("#gamestart").on("click",function(){
+    $("#buttons").find(".characters").on("click",function(){
         
-        startseason(seasons[0]);
+        $("#buttons").addClass("hide");
+       var character= $(this).data("character");
+       $("#person").addClass(character);
+        startseason();
         
     });
 
 
     // Start season winter 
     
-    function startseason(season){
-        $("#background").removeClass().addClass(season+'-background');
-        screensize();
-       scoredisplay();
-       setInterval(moveclothes,500);
+    function startseason(){
+        $("#background").removeClass().addClass(currentseason+'-background');
+        scoredisplay();
+
+        if(seasonindex===0){
+          screensize();  
+        } 
+       
+       setInterval(moveclothes,200);
        
     }
-    
     
     // The score
     
     var scoreValue = 0;
-    var scoremax = 5;
+    var scoremax = 2;
+    var scoremin = -5;
     
     function scoredisplay(){
         $('#score span').text( scoreValue );
@@ -90,7 +102,6 @@ $( document ).ready( function() {
     }
     
     function score(caughtseason) {
-        var currentseason = seasons[0];
         if(currentseason===caughtseason){
             scoreup(); 
         }
@@ -104,8 +115,35 @@ $( document ).ready( function() {
             
         }
         
+        if(scoreValue === scoremin) {
+            
+             $( window ).trigger( 'YouLose' );
+
+        }
+        
     }
     
+     $(window).on( 'NextSeason', function(){
+        scoreValue = 0;
+        seasonindex++;
+    
+        
+        if( seasonindex > ( seasons.length - 1 ) ){
+            $(window).trigger( 'YouWin' );
+            return;
+        }
+        
+        currentseason=seasons[seasonindex];
+        startseason();
+    });
+    
+    $(window).on( 'YouWin', function(){
+        $('#winner').removeClass('hide');
+    } );
+    
+     $(window).on( 'YouLose', function(){
+        $('#loser').removeClass('hide');
+    } );
     
 //Take the width of your screen
     function screensize() {
@@ -122,7 +160,8 @@ $( document ).ready( function() {
     function insertclothes(clothingcounts) {
         var clothescontainer =$("#closet") ;
         for (var i = 0; i < clothingcounts; i++) {
-            var left= i*100+"px";
+            var left= Math.random()*window.innerWidth;
+            var top= Math.random() * -1000 
             var random = randomclothes();
             var classname= random.season+"-"+random.name;
             
@@ -130,7 +169,7 @@ $( document ).ready( function() {
                 .addClass("clothes")
                 .addClass(classname)
                 .attr( 'data-season', random.season )
-                .css({left:left})
+                .css({left:left, top:top})
                 .appendTo(clothescontainer);
     
         }
@@ -144,6 +183,8 @@ $( document ).ready( function() {
            var item = $(clothes[i])
            var top= item.position().top;
            var newposition = top +20;
+           
+           
           item.css("top", newposition);
           
           // collision dectection
@@ -156,9 +197,17 @@ $( document ).ready( function() {
                rect1.height + rect1.top > rect2.top) {
                 // collision detected!
                item.remove();
+               score(item.data('season'));
+             insertclothes(1)
                 
             }
-          
+            
+            
+            if(newposition>window.innerHeight){
+          item.remove()
+           insertclothes(1)
+                
+            }
         }
         
         
