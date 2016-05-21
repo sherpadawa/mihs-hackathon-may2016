@@ -22,6 +22,7 @@
     z-index:0;
 }
 
+
  
 
 #container.spring #background {
@@ -60,28 +61,91 @@
     
 }
 
+#closet {
+    position: relative;
+}
 
+#closet .clothes {
+    position: absolute;
+}
  
 .clothes {
  width:100px;   
  height:100px;
  background-size:contain;
  background-repeat: no-repeat;
-    
+ background-color:black;
 }
-.sandals{
+
+.characters{
+    width:200px;
+    height:200px;
+    background-size:contain;
+ background-repeat: no-repeat;
+}
+
+.beach-sandals{
 background-image:url("images/beach/sandals.jpg");    
 }
 
-.winterboots{
-    background-image:url("images/Winter/winter-boots.jpg");
+.beach-hawaiian{
+    background-image:url("images/beach/hawaiianshirt.png");
+}
+
+.beach-hat{
+    background-image:url("images/beach/hat.png");
+}
+.beach-shorts{
+    background-image:url("images/beach/beachshorts.png");
+}
+
+    
+.winter-boots{
+    background-image:url("images/Winter/WinterBoots.png");
 }
 
 .winter-hat{
     background-image:url("images/Winter/winter-hat.png");
 }
 
-.hawaiian{
-    background-image:url("images/beach/hawaiian.gif");
+.winter-mittens{
+    background-image:url("images/Winter/mittens-pink.png");
 }
-    
+
+.winter-sweater{
+    background-image:url("images/Winter/ugly-sweater.png");
+}
+
+.boy{
+    background-image:url("images/characters/boy.png");
+}
+
+.red{
+    background-color:red;
+}
+ .western-cowboyboots{
+     background-image:url("images/Western/cowboyboots.png");
+ }
+.western-cowboyhat{
+    background-image:url("images/Western/cowboyhat.png"); 
+}
+.western-cowboyjacket{
+    background-image:url("images/Western/cowboyjacket.png"); 
+}
+.western-lasso{
+    background-image:url("images/Western/lasso.png");
+}
+
+.fancy-dress{
+    background-image:url("images/Fancy/fancy-dress.png");
+}
+
+.fancy-suit{
+    background-image:url("images/Fancy/fancy-suit.png");
+}
+
+.background-westerntown{
+    background-image:url("images/Western/westerntown.jpg"); 
+
+    background-size: contain;
+}
