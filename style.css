@@ -22,8 +22,23 @@
     z-index:0;
 }
 
+.center-button{
+    
+}
 
- 
+#buttons{
+    position:absolute;
+    z-index: 100;
+    
+}
+
+#score {
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:99;
+    
+}
 
 #container.spring #background {
     background-image:url("images/Spring/afternoonofspring.gif");
@@ -47,6 +62,11 @@
 .btn {
     height:35px;
     width:200px;
+}
+
+#score {
+    
+    z-index:1;
 }
 
 #person {
@@ -75,6 +95,7 @@
  background-size:contain;
  background-repeat: no-repeat;
  background-color:black;
+ background-position: center; 
 }
 
 .characters{
@@ -82,6 +103,7 @@
     height:200px;
     background-size:contain;
  background-repeat: no-repeat;
+ background-position: center; 
 }
 
 .beach-sandals{
@@ -120,6 +142,10 @@ background-image:url("images/beach/sandals.jpg");
     background-image:url("images/characters/boy.png");
 }
 
+.girl{
+    background-image:url("images/characters/girl.png");
+}
+
 .red{
     background-color:red;
 }
@@ -144,8 +170,27 @@ background-image:url("images/beach/sandals.jpg");
     background-image:url("images/Fancy/fancy-suit.png");
 }
 
-.background-westerntown{
-    background-image:url("images/Western/westerntown.jpg"); 
+.fancy-shoe{
+    background-image:url("images/Fancy/shoe.png");
+}
 
+.fancy-hat{
+    background-image:url("images/Fancy/tophat.png");
+}
+
+.western-background{
+    background-image:url("images/Western/westerntown.jpg"); 
     background-size: contain;
 }
+
+.beach-background{
+    background-image:url("images/beach/beach-background.jpg");
+}
+
+.fancy-background{
+    background-image:url("images/Fancy/ballroom-background.jpg");
+}
+.winter-background{
+    background-image:url("images/Winter/winter-background.jpg");
+}
+

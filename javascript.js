@@ -17,6 +17,37 @@ $( document ).ready( function() {
     
     var seasons=["winter","spring","beach"];
     
+    var clothes = [
+    
+        { 'season' : 'beach', 'name' : 'sandals' }, 
+        { 'season' : 'beach', 'name' : 'hawaiian'},
+        { 'season' : 'beach', 'name' : 'hat'},
+        { 'season' : 'beach', 'name' : 'shorts'},
+        
+        { 'season' : 'winter', 'name' : 'boots'},
+        { 'season' : 'winter', 'name' : 'hat'},
+        { 'season' : 'winter', 'name' : 'mittens'},
+        { 'season' : 'winter', 'name' : 'sweater'},
+        
+        { 'season' : 'western', 'name' : 'cowboyboots'},
+        { 'season' : 'western', 'name' : 'cowboyhat'},
+        { 'season' : 'western', 'name' : 'cowboyjacket'},
+        { 'season' : 'western', 'name' : 'lasso'},
+        
+        { 'season' : 'fancy', 'name' : 'dress'},
+        { 'season' : 'fancy', 'name' : 'suit'},
+        { 'season' : 'fancy', 'name' : 'shoe'},
+        { 'season' : 'fancy', 'name' : 'hat'},
+                       
+    ];
+    
+    
+    function randomclothes() {
+        var randomnumber = Math.floor(Math.random() * (clothes.length));
+        return clothes[randomnumber];
+            
+    }
+    
     
     // Starts the game and change the background
     
@@ -25,13 +56,45 @@ $( document ).ready( function() {
         startseason(seasons[0]);
         
     });
-});
+
 
     // Start season winter 
     
     function startseason(season){
-        $("#container").addClass(season);
+        $("#background").removeClass().addClass(season+'-background');
         screensize();
+       scoredisplay();
+       setInterval(moveclothes,500);
+       
+    }
+    
+    
+    // The score
+    
+    var scoreValue = 0;
+    
+    function scoredisplay(){
+        $('#score span').text( scoreValue );
+    }
+    
+    function scoreup(){
+        scoreValue++;
+        scoredisplay();
+    }
+    
+    function scoredown(){
+        scoreValue--;
+        scoredisplay();
+    }
+    
+    function score(clothingItem) {
+        var currentseason= seasons[0];
+        if(currentseason===clothingItem.season){
+            scoreup(); 
+        }
+        else{
+            scoredown();
+        }
     }
     
     
@@ -51,16 +114,45 @@ $( document ).ready( function() {
         var clothescontainer =$("#closet") ;
         for (var i = 0; i < clothingcounts; i++) {
             var left= i*100+"px";
-        
-            $('<div/>').addClass("clothes").css({left:left}).appendTo(clothescontainer);
+            var random = randomclothes();
+            var classname= random.season+"-"+random.name;
+            $('<div/>').addClass("clothes").addClass(classname).css({left:left}).appendTo(clothescontainer);
     
         }
+        
+    }
+    
+    function moveclothes() {
+        
+        
+        var clothes = $(".clothes");
+        for(var i = 0; i <  clothes.length; i++){
+           var item = $(clothes[i])
+           var top= item.position().top;
+           var newposition = top +20;
+          item.css("top", newposition);
+          
+          // collision dectection
+          console.log(item)
+          var rect1 = $("#person")[0].getBoundingClientRect();
+          var rect2 = $(item).getBoundingClientRect();
+
+if (rect1.left< rect2.left + rect2.width &&
+   rect1.left + rect1.width > rect2.left &&
+   rect1.top < rect2.top + rect2.height &&
+   rect1.height + rect1.top > rect2.top) {
+    // collision detected!
+    console.log("we collided");
+}
+          
+        }
+        
         
     }
 
 
     function moveleft() {
-        console.log("moveleft");
+        
       var left = $("#person").position().left;
       
       var newposition = left -18;
@@ -68,12 +160,10 @@ $( document ).ready( function() {
           newposition=0
       }
     $('#person').css("left",newposition)    
-      console.log(left);
     }
     
     
      function moveright() {
-        console.log("moveright");
         var right = $("#person").position().left;
         var newposition = right +18;
       if(newposition>=window.innerWidth -$("#person").width()) {
@@ -81,13 +171,6 @@ $( document ).ready( function() {
       }
         
          $('#person').css("left",newposition);
-         console.log(right);
     }  
-// collision dectection
-     var rect1 = {x: 5, y: 5, width: 50, height: 50}
-     var rect2 = {x: 20, y: 10, width: 10, height: 10}
-     /*
-     if (rect1.x < rect2.x + rect2.width 
-   rect1.x + rect1.width > rect2.x 
-   rect1.y < rect2.y + rect2.height 
-   rect1.height + rect1.y > rect2.y) {}*/
+
+});
