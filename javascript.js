@@ -81,7 +81,7 @@ $( document ).ready( function() {
        
        clearInterval( addClothesInterval );
        
-       addClothesInterval = setInterval(moveclothes,200);
+       addClothesInterval = setInterval(moveclothes,20);
        
     }
     
